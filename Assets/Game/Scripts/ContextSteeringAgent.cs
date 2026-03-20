@@ -5,7 +5,6 @@ public class ContextSteeringAgent : MonoBehaviour
 {
     [SerializeField] 
     private int _mapResolution = 16;
-    
     [SerializeField] 
     private float _moveSpeed = 5f;
     [SerializeField] 
