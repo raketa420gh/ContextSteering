@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface IInterestContextBehavior
+public interface IInterestBehavior
 {
     void EvaluateInterest(ContextMap interestMap, Transform agentTransform);
 }

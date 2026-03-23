@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public interface IDangerContextBehavior
+public interface IDangerBehavior
 {
     void EvaluateDanger(ContextMap dangerMap, Transform agentTransform);
 }

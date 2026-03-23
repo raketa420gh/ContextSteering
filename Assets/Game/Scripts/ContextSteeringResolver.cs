@@ -10,24 +10,17 @@ public class ContextSteeringResolver
         for (int i = 0; i < resolution; i++)
         {
             if (dangerMap.Values[i] < minDanger)
-            {
                 minDanger = dangerMap.Values[i];
-            }
-        }
-        
-        bool[] mask = new bool[resolution];
-        for (int i = 0; i < resolution; i++)
-        {
-            mask[i] = dangerMap.Values[i] > minDanger + 0.01f;
         }
         
         float[] maskedInterest = new float[resolution];
         for (int i = 0; i < resolution; i++)
         {
-            maskedInterest[i] = mask[i] ? 0f : interestMap.Values[i];
+            bool isDangerous = dangerMap.Values[i] > minDanger + 0.01f;
+            maskedInterest[i] = isDangerous ? 0f : interestMap.Values[i];
         }
         
-        int bestSlot = 0;
+        int bestSlot = -1;
         float bestValue = 0f;
         for (int i = 0; i < resolution; i++)
         {
@@ -40,27 +33,21 @@ public class ContextSteeringResolver
 
         speed = bestValue;
 
-        if (bestValue < 0.001f)
-        {
+        if (bestSlot < 0 || bestValue < 0.001f)
             return Vector2.zero;
-        }
         
-        Vector2 direction = SubslotRefinement(interestMap, maskedInterest, bestSlot);
-
-        return direction;
+        return SubslotRefinement(interestMap, maskedInterest, bestSlot, resolution);
     }
-    
-    private Vector2 SubslotRefinement(ContextMap map, float[] maskedInterest, int bestSlot)
-    {
-        int resolution = map.Resolution;
 
+    private Vector2 SubslotRefinement(ContextMap map, float[] maskedInterest, int bestSlot, int resolution)
+    {
         int prevSlot = (bestSlot - 1 + resolution) % resolution;
         int nextSlot = (bestSlot + 1) % resolution;
 
         float prevValue = maskedInterest[prevSlot];
         float bestValue = maskedInterest[bestSlot];
         float nextValue = maskedInterest[nextSlot];
-        
+
         float offset = 0f;
         float total = prevValue + nextValue;
         if (total > 0.001f)
@@ -68,7 +55,7 @@ public class ContextSteeringResolver
             offset = (nextValue - prevValue) / (2f * Mathf.Max(bestValue, 0.001f));
             offset = Mathf.Clamp(offset, -0.5f, 0.5f);
         }
-        
+
         float virtualSlot = bestSlot + offset;
         float angle = virtualSlot * (360f / resolution);
         float rad = angle * Mathf.Deg2Rad;
