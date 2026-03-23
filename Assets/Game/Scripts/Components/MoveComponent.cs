@@ -15,7 +15,7 @@ public class MoveComponent : MonoBehaviour
         Vector3 moveDir = new Vector3(direction2D.x, 0f, direction2D.y).normalized;
         float finalSpeed = _moveSpeed * Mathf.Clamp01(speedMultiplier);
 
-        transform.position += moveDir * finalSpeed * Time.deltaTime;
+        transform.position += moveDir * (finalSpeed * Time.deltaTime);
 
         Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
         transform.rotation = Quaternion.Slerp(
