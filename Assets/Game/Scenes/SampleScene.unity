@@ -1725,6 +1725,8 @@ GameObject:
   - component: {fileID: 1193069281}
   - component: {fileID: 1193069284}
   - component: {fileID: 1193069286}
+  - component: {fileID: 1193069288}
+  - component: {fileID: 1193069287}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -1841,6 +1843,49 @@ MonoBehaviour:
   _rayLength: 10
   _showInterest: 1
   _showDanger: 1
+--- !u!114 &1193069287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193069278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d18b733980e44f2bbb9990fe41d7e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvoidBehaviorGizmos
+  _showGizmos: 1
+  _showConnections: 1
+  _showDetectionRadius: 1
+  _showMinDistanceRadius: 1
+  _detectionRadiusColor: {r: 1, g: 0.3, b: 0, a: 0.12}
+  _minDistanceColor: {r: 1, g: 0, b: 0, a: 0.25}
+  _dangerConnectionColor: {r: 1, g: 0.2, b: 0.1, a: 0.7}
+  _safeConnectionColor: {r: 1, g: 1, b: 1, a: 0.15}
+  _obstacleTag: Obstacle
+  _minDistance: 2
+  _detectionRadius: 12
+--- !u!114 &1193069288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193069278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70cbb3c5c92348b38ebb5370d79a447b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttractionPointGizmos
+  _showGizmos: 1
+  _showConnections: 1
+  _showRadius: 1
+  _radiusColor: {r: 0, g: 1, b: 0.5, a: 0.15}
+  _connectionColor: {r: 0, g: 1, b: 0.5, a: 0.6}
+  _outOfRangeColor: {r: 1, g: 1, b: 1, a: 0.15}
+  _attractionTag: Attraction
+  _maxDistance: 15
 --- !u!1 &1311946362
 GameObject:
   m_ObjectHideFlags: 0
