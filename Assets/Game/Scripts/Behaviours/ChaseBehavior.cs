@@ -2,16 +2,23 @@
 
 public class ChaseBehavior : MonoBehaviour, IInterestBehavior
 {
-    [SerializeField] 
+    [SerializeField]
     private Transform _target;
-    [SerializeField] 
+
+    [SerializeField]
     private float _maxDistance = 30f;
-    [SerializeField] 
+
+    [SerializeField]
     private float _falloffSlots = 3f;
-    [SerializeField] 
+
+    [SerializeField]
     private float _maxIntensity = 1f;
-    [SerializeField] 
+
+    [SerializeField]
     private float _arrivalDistance = 0.5f;
+
+    [SerializeField]
+    private AnimationCurve _intensityCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     public void EvaluateInterest(ContextMap interestMap, Transform agentTransform)
     {
@@ -26,13 +33,17 @@ public class ChaseBehavior : MonoBehaviour, IInterestBehavior
         if (distance < _arrivalDistance || distance > _maxDistance)
             return;
 
-        float normalizedDistance = 1f - Mathf.Clamp01(distance / _maxDistance);
-        float intensity = normalizedDistance * _maxIntensity;
+        float normalizedDistance = Mathf.Clamp01(distance / _maxDistance);
+        float curveValue = _intensityCurve.Evaluate(1f - normalizedDistance);
+        float intensity = curveValue * _maxIntensity;
 
         intensity = Mathf.Max(intensity, 0.1f);
 
         interestMap.WriteValue(toTarget.normalized, intensity, _falloffSlots);
     }
 
-    private Vector2 ToVec2(Vector3 v) => new Vector2(v.x, v.z);
+    private Vector2 ToVec2(Vector3 v)
+    {
+        return new Vector2(v.x, v.z);
+    }
 }

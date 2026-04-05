@@ -2,6 +2,15 @@
 
 public class ContextSteeringResolver
 {
+    private readonly float _dangerThreshold;
+    private readonly float _minimumSpeedThreshold;
+
+    public ContextSteeringResolver(float dangerThreshold, float minimumSpeedThreshold)
+    {
+        _dangerThreshold = dangerThreshold;
+        _minimumSpeedThreshold = minimumSpeedThreshold;
+    }
+
     public Vector2 Resolve(ContextMap interestMap, ContextMap dangerMap, out float speed)
     {
         int resolution = interestMap.Resolution;
@@ -16,13 +25,26 @@ public class ContextSteeringResolver
         float[] maskedInterest = new float[resolution];
         for (int i = 0; i < resolution; i++)
         {
-            bool isDangerous = dangerMap.Values[i] > minDanger + 0.01f;
+            bool isDangerous = dangerMap.Values[i] > minDanger + _dangerThreshold;
             maskedInterest[i] = isDangerous ? 0f : interestMap.Values[i];
         }
         
+        int bestSlot = FindBestSlot(maskedInterest, out float bestValue);
+
+        speed = CalculateSpeed(bestValue, dangerMap, bestSlot);
+
+        if (bestSlot < 0 || bestValue < 0.001f)
+            return Vector2.zero;
+        
+        return SubslotRefinement(maskedInterest, bestSlot, resolution);
+    }
+
+    private int FindBestSlot(float[] maskedInterest, out float bestValue)
+    {
         int bestSlot = -1;
-        float bestValue = 0f;
-        for (int i = 0; i < resolution; i++)
+        bestValue = 0f;
+        
+        for (int i = 0; i < maskedInterest.Length; i++)
         {
             if (maskedInterest[i] > bestValue)
             {
@@ -31,15 +53,21 @@ public class ContextSteeringResolver
             }
         }
 
-        speed = bestValue;
-
-        if (bestSlot < 0 || bestValue < 0.001f)
-            return Vector2.zero;
-        
-        return SubslotRefinement(interestMap, maskedInterest, bestSlot, resolution);
+        return bestSlot;
     }
 
-    private Vector2 SubslotRefinement(ContextMap map, float[] maskedInterest, int bestSlot, int resolution)
+    private float CalculateSpeed(float interest, ContextMap dangerMap, int slotIndex)
+    {
+        if (slotIndex < 0)
+            return 0f;
+
+        float dangerPenalty = 1f - Mathf.Clamp01(dangerMap.Values[slotIndex]);
+        float finalSpeed = interest * dangerPenalty;
+
+        return Mathf.Max(finalSpeed, interest > 0.001f ? _minimumSpeedThreshold : 0f);
+    }
+
+    private Vector2 SubslotRefinement(float[] maskedInterest, int bestSlot, int resolution)
     {
         int prevSlot = (bestSlot - 1 + resolution) % resolution;
         int nextSlot = (bestSlot + 1) % resolution;

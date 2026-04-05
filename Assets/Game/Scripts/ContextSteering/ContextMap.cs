@@ -5,9 +5,12 @@ public class ContextMap
     public float[] Values { get; }
     public int Resolution => Values.Length;
 
+    private float[] _tempBuffer;
+
     public ContextMap(int resolution)
     {
         Values = new float[resolution];
+        _tempBuffer = new float[resolution];
     }
 
     public Vector2 GetDirection(int slotIndex)
@@ -37,6 +40,21 @@ public class ContextMap
             float t = Mathf.Abs(offset) / Mathf.Max(falloffSlots, 0.001f);
             float value = intensity * Mathf.Clamp01(1f - t);
             Values[slot] = Mathf.Max(Values[slot], value);
+        }
+    }
+
+    public void ApplyBlur(int iterations = 1)
+    {
+        for (int iter = 0; iter < iterations; iter++)
+        {
+            for (int i = 0; i < Resolution; i++)
+            {
+                int prev = (i - 1 + Resolution) % Resolution;
+                int next = (i + 1) % Resolution;
+                _tempBuffer[i] = (Values[prev] + Values[i] * 2f + Values[next]) * 0.25f;
+            }
+
+            System.Array.Copy(_tempBuffer, Values, Resolution);
         }
     }
 
