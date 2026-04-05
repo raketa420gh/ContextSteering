@@ -14,54 +14,31 @@ public class AttractionPointBehavior : MonoBehaviour, IInterestBehavior
     [SerializeField]
     private float _maxIntensity = 0.5f;
 
-    private GameObject[] _cachedPoints;
-    private float _cacheTime;
-    private const float CacheRefreshInterval = 1f;
-
     public void EvaluateInterest(ContextMap interestMap, Transform agentTransform)
     {
-        RefreshAttractionCache();
+        GameObject[] points = GameObject.FindGameObjectsWithTag(_attractionTag);
 
-        if (_cachedPoints == null || _cachedPoints.Length == 0)
+        if (points == null || points.Length == 0)
             return;
 
-        Vector2 agentPos = ToVec2(agentTransform.position);
+        Vector2 agentPos = new Vector2(agentTransform.position.x, agentTransform.position.z);
 
-        foreach (GameObject point in _cachedPoints)
+        foreach (GameObject point in points)
         {
             if (point == null)
                 continue;
 
-            EvaluateAttractionPoint(interestMap, agentPos, point);
+            Vector2 pointPos = new Vector2(point.transform.position.x, point.transform.position.z);
+            Vector2 toPoint = pointPos - agentPos;
+            float distance = toPoint.magnitude;
+
+            if (distance > _maxDistance || distance < 0.5f)
+                continue;
+
+            float normalizedProximity = 1f - Mathf.Clamp01(distance / _maxDistance);
+            float intensity = Mathf.SmoothStep(0f, _maxIntensity, normalizedProximity);
+
+            interestMap.WriteValue(toPoint.normalized, intensity, _falloffSlots);
         }
-    }
-
-    private void RefreshAttractionCache()
-    {
-        if (_cachedPoints == null || Time.time - _cacheTime > CacheRefreshInterval)
-        {
-            _cachedPoints = GameObject.FindGameObjectsWithTag(_attractionTag);
-            _cacheTime = Time.time;
-        }
-    }
-
-    private void EvaluateAttractionPoint(ContextMap interestMap, Vector2 agentPos, GameObject point)
-    {
-        Vector2 pointPos = ToVec2(point.transform.position);
-        Vector2 toPoint = pointPos - agentPos;
-        float distance = toPoint.magnitude;
-
-        if (distance > _maxDistance || distance < 0.5f)
-            return;
-
-        float normalizedProximity = 1f - Mathf.Clamp01(distance / _maxDistance);
-        float intensity = Mathf.SmoothStep(0f, _maxIntensity, normalizedProximity);
-
-        interestMap.WriteValue(toPoint.normalized, intensity, _falloffSlots);
-    }
-
-    private Vector2 ToVec2(Vector3 v)
-    {
-        return new Vector2(v.x, v.z);
     }
 }
