@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd049b16e5354f398a13af6267db6918, type: 3}
   m_Name: ContextSteeringConfig
   m_EditorClassIdentifier: Assembly-CSharp::ContextSteeringConfig
-  _mapResolution: 32
+  _mapResolution: 64
   _temporalBlend: 0.2
   _moveSpeed: 10
   _rotationSmoothing: 10
