@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &309017438
 GameObject:
@@ -902,7 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &390307698
 GameObject:
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &658613751
 GameObject:
@@ -1679,7 +1679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &832575517
 GameObject:
@@ -1775,7 +1775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1029203385
 GameObject:
@@ -1822,7 +1822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1116034608
 GameObject:
@@ -2023,6 +2023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ContextSteeringAgent
   _config: {fileID: 11400000, guid: b81c05884b75e184f97bcf114c58eb27, type: 2}
+  _radius: 1
 --- !u!114 &1193069284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2035,7 +2036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0707b6104c3e44879046f5709ea13b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttractionPointBehavior
-  _attractionTag: Attraction
   _maxDistance: 80
   _falloffSlots: 6
   _maxIntensity: 0.02
@@ -2190,7 +2190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1452065845
 GameObject:
@@ -2326,7 +2326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1575558268
 GameObject:
@@ -2583,7 +2583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1621574636
 GameObject:
@@ -2630,7 +2630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1671596369
 GameObject:
@@ -2730,9 +2730,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1788202757}
+  - component: {fileID: 1788202758}
   m_Layer: 0
   m_Name: Attraction 1 (1)
-  m_TagString: Attraction
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2753,6 +2754,20 @@ Transform:
   - {fileID: 1824566819}
   m_Father: {fileID: 166083838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1788202758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788202756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bddea5ebe542624f92ff9706a5844a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttractionComponent
+  _radius: 0.7
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &1824566818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,7 +2781,7 @@ GameObject:
   - component: {fileID: 1824566820}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Attraction
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2855,7 +2870,7 @@ GameObject:
   - component: {fileID: 1838821683}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Attraction
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2940,9 +2955,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1892764387}
+  - component: {fileID: 1892764388}
   m_Layer: 0
   m_Name: Attraction 1 (2)
-  m_TagString: Attraction
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2956,13 +2972,27 @@ Transform:
   m_GameObject: {fileID: 1892764386}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.22, y: 0, z: -7.27}
+  m_LocalPosition: {x: -10.01, y: 0, z: -4.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2037784967}
   m_Father: {fileID: 166083838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1892764388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892764386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bddea5ebe542624f92ff9706a5844a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttractionComponent
+  _radius: 0.7
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &1936537022
 GameObject:
   m_ObjectHideFlags: 0
@@ -2972,9 +3002,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1936537023}
+  - component: {fileID: 1936537024}
   m_Layer: 0
   m_Name: Attraction 1
-  m_TagString: Attraction
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2995,6 +3026,20 @@ Transform:
   - {fileID: 1838821682}
   m_Father: {fileID: 166083838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1936537024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936537022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bddea5ebe542624f92ff9706a5844a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttractionComponent
+  _radius: 0.7
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &2006188300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,7 +3085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2037784966
 GameObject:
@@ -3055,7 +3100,7 @@ GameObject:
   - component: {fileID: 2037784968}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Attraction
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3208,7 +3253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae4ab7ca7b24658891e87211966b31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleComponent
-  _radius: 1
+  _radius: 0.7
   _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2130775164
 GameObject:

@@ -1,10 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class AttractionPointBehavior : MonoBehaviour, IInterestBehavior
 {
-    [SerializeField]
-    private string _attractionTag = "Attraction";
-
     [SerializeField]
     private float _maxDistance = 15f;
 
@@ -14,31 +11,37 @@ public class AttractionPointBehavior : MonoBehaviour, IInterestBehavior
     [SerializeField]
     private float _maxIntensity = 0.5f;
 
+    private ContextSteeringAgent _agent;
+
     public void EvaluateInterest(ContextMap interestMap, Transform agentTransform)
     {
-        GameObject[] points = GameObject.FindGameObjectsWithTag(_attractionTag);
+        AttractionComponent[] attractions = Object.FindObjectsOfType<AttractionComponent>();
 
-        if (points == null || points.Length == 0)
+        if (attractions == null || attractions.Length == 0)
             return;
 
+        if (_agent == null)
+            _agent = agentTransform.GetComponent<ContextSteeringAgent>();
+
+        float agentRadius = _agent != null ? _agent.Radius : 0f;
         Vector2 agentPos = new Vector2(agentTransform.position.x, agentTransform.position.z);
 
-        foreach (GameObject point in points)
+        foreach (AttractionComponent attraction in attractions)
         {
-            if (point == null)
+            if (attraction == null)
                 continue;
 
-            Vector2 pointPos = new Vector2(point.transform.position.x, point.transform.position.z);
-            Vector2 toPoint = pointPos - agentPos;
-            float distance = toPoint.magnitude;
+            Vector2 toAttraction = attraction.Position2D - agentPos;
+            float distance = toAttraction.magnitude;
+            float arrivalDistance = attraction.Radius + agentRadius;
 
-            if (distance > _maxDistance || distance < 0.5f)
+            if (distance > _maxDistance || distance < arrivalDistance)
                 continue;
 
             float normalizedProximity = 1f - Mathf.Clamp01(distance / _maxDistance);
             float intensity = Mathf.SmoothStep(0f, _maxIntensity, normalizedProximity);
 
-            interestMap.WriteValue(toPoint.normalized, intensity, _falloffSlots);
+            interestMap.WriteValue(toAttraction.normalized, intensity, _falloffSlots);
         }
     }
 }

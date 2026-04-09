@@ -14,6 +14,8 @@ public class AvoidBehavior : MonoBehaviour, IDangerBehavior
     [SerializeField]
     private float _safetyMargin = 0.5f;
 
+    private ContextSteeringAgent _agent;
+
     public void EvaluateDanger(ContextMap dangerMap, Transform agentTransform)
     {
         ObstacleComponent[] obstacles = FindObjectsOfType<ObstacleComponent>();
@@ -21,6 +23,10 @@ public class AvoidBehavior : MonoBehaviour, IDangerBehavior
         if (obstacles == null || obstacles.Length == 0)
             return;
 
+        if (_agent == null)
+            _agent = agentTransform.GetComponent<ContextSteeringAgent>();
+
+        float agentRadius = _agent != null ? _agent.Radius : 0f;
         Vector2 agentPos = new Vector2(agentTransform.position.x, agentTransform.position.z);
 
         foreach (ObstacleComponent obstacle in obstacles)
@@ -32,7 +38,7 @@ public class AvoidBehavior : MonoBehaviour, IDangerBehavior
             Vector2 toObstacle = obstaclePos - agentPos;
             float distance = toObstacle.magnitude;
 
-            float threatRadius = obstacle.Radius + _safetyMargin;
+            float threatRadius = obstacle.Radius + agentRadius + _safetyMargin;
 
             if (distance > _detectionRadius || distance < 0.01f)
                 continue;

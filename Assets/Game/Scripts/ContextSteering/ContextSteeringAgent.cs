@@ -7,9 +7,13 @@ public class ContextSteeringAgent : MonoBehaviour
 {
     public ContextMap DebugInterest => _brain?.CombinedInterest;
     public ContextMap DebugDanger => _brain?.CombinedDanger;
+    public float Radius => _radius;
 
     [SerializeField]
     private ContextSteeringConfig _config;
+
+    [SerializeField]
+    private float _radius = 0.5f;
 
     private List<IInterestBehavior> _interestBehaviors;
     private List<IDangerBehavior> _dangerBehaviors;
@@ -65,6 +69,12 @@ public class ContextSteeringAgent : MonoBehaviour
         {
             Debug.LogWarning($"[{gameObject.name}] No interest behaviors found. Agent won't move.", this);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 
     private void InitializeComponents()
